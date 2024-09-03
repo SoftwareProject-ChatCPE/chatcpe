@@ -9,8 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "flowbite": "^2.5.1",
     "flowbite-react": "^0.10.1",
+=======
+    "dotenv": "^16.4.5",
+    "flowbite-react": "^0.10.1",
+    "mongodb": "^6.8.0",
+>>>>>>> 2464cc3a9a88162824e91038a5ca9aba027816c8
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18"
