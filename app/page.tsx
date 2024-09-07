@@ -2,6 +2,7 @@
 // pages/index.tsx
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import Link from "next/link";
 import Image from 'next/image';
 import { Carousel } from "flowbite-react";
 
@@ -52,7 +53,7 @@ export default function Home() {
           </button>
           <div className="relative">
             <button className="button">
-              Login
+            <Link href="/login">Login</Link>
             </button>
             <p className="warn absolute -bottom-6 left-8">
               ** for staff only
