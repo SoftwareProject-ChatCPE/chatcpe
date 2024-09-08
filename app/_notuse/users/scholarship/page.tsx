@@ -31,8 +31,8 @@ const Scholarshippage = () => {
                                 <p>Email : studentaffairs@cmu.ac.th</p>
                                 <div className="buttons">
                                     <button className="social-btn">f</button>
-                                    <Link href="/users/scholarship/map" className="map-btn">แผนผังคณะ</Link>
-                                    <Link href="/users/scholarship/map" className="map-btn">Google Map</Link>
+                                    <Link href="/_notuse/users/scholarship/map" className="map-btn">แผนผังคณะ</Link>
+                                    <Link href="/_notuse/users/scholarship/map" className="map-btn">Google Map</Link>
                                 </div>
                             </div>
 

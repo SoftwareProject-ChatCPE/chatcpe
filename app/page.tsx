@@ -49,11 +49,11 @@ export default function Home() {
         <p className="subheading ">a basic screening bot</p>
         <div className="flex space-x-4">
           <button className="button">
-            Enter
+            <Link href="/register">Register</Link>
           </button>
           <div className="relative">
             <button className="button">
-            <Link href="/login">Login</Link>
+            <Link href='/sign-in'>sign-in</Link>
             </button>
             <p className="warn absolute -bottom-6 left-8">
               ** for staff only

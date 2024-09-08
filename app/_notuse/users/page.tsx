@@ -3,7 +3,7 @@ import React from 'react';
 import Image from "next/image";
 import Head from 'next/head';
 import Link from "next/link";
-import CircleFollowMouse from '../components/CircleFollowMouse';
+import CircleFollowMouse from '../../components/CircleFollowMouse';
 
 const Selectpage = () => {
   return (
@@ -31,7 +31,7 @@ const Selectpage = () => {
               <section>
                 <h2>What Info Are You Seeking For?</h2>
                 <div className="button-container">
-                  <Link href="/users/scholarship" className='schor-bth'>Scholarship</Link>
+                  <Link href="/_notuse/users/scholarship" className='schor-bth'>Scholarship</Link>
                   <button>Professor's Contact</button>
                   <button>Finding Classroom</button>
                   <button>30th Anniversary Building</button>
