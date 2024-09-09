@@ -8,24 +8,51 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model answers {
-  answer_id   Int        @id(map: "answer_id")
-  answer_text String     @db.Char(1)
+model Answer {
+  answer_id   Int       @id @default(autoincrement())
+  answer_text String
   question_id Int?
-  questions   questions? @relation(fields: [question_id], references: [question_id], onDelete: NoAction, onUpdate: NoAction, map: "question_id")
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  updated_at  DateTime? @updatedAt @db.Timestamp(6)
+  questions   Question? @relation(fields: [question_id], references: [question_id], onDelete: NoAction, onUpdate: NoAction, map: "question_id")
 }
 
-model category {
-  category_id   Int         @id(map: "category_id") @default(autoincrement())
-  category_name String      @db.Char(1)
-  questions     questions[]
+model Category {
+  category_id   Int        @id @default(autoincrement())
+  category_name String
+  created_at    DateTime?  @default(now()) @db.Timestamp(6)
+  updated_at    DateTime?  @updatedAt @db.Timestamp(6)
+  questions     Question[]
 }
 
-model questions {
-  question_id   Int       @id(map: "questions_id")
-  question_text String    @db.Char(1)
+model Question {
+  question_id   Int       @id @default(autoincrement())
+  question_text String
   visit_count   Int?
   category_id   Int?
-  answers       answers[]
-  category      category? @relation(fields: [category_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "category_id")
+  created_at    DateTime? @default(now())
+  updated_at    DateTime? @updatedAt @db.Timestamp(6)
+  answers       Answer[]
+  category      Category? @relation(fields: [category_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "category_id")
+}
+
+model User {
+  user_id    Int       @id @default(autoincrement())
+  name       String
+  surname    String
+  role       Int       @default(1)
+  email      String    @unique
+  password   String
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @updatedAt @db.Timestamp(6)
+  audit      Audit[]
+}
+
+model Audit {
+  audit_id   Int       @id @default(autoincrement())
+  user_id    Int
+  action     String
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @updatedAt @db.Timestamp(6)
+  user       User?     @relation(fields: [user_id], references: [user_id])
 }
