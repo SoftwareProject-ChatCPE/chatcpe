@@ -1,11 +1,20 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { hash } from "bcryptjs";
+import * as z from 'zod';
+
+// Define  a scheme for input validation
+const userSchema = z.object({
+    name: z.string(),
+    surname: z.string(),
+    email: z.string().email(),
+    password: z.string().min(1,).max(8,'Password must be at least 8 characters'),
+})
 
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { name, surname, email, password } = body;
+        const { name, surname, email, password } = userSchema.parse(body);
 
        // Check if email already exists
         const existingEmail = await prisma.user.findUnique({

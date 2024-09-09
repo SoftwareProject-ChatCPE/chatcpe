@@ -49,7 +49,7 @@ export default function Home() {
         <p className="subheading ">a basic screening bot</p>
         <div className="flex space-x-4">
           <button className="button">
-            <Link href="/register">Register</Link>
+            <Link href="/">Enter</Link>
           </button>
           <div className="relative">
             <button className="button">
