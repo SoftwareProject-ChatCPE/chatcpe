@@ -8,8 +8,8 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const messages = [
     'Q1: Scholarship',
-    'Q2: Document.',
-    'Q3: Professor\'s contact.',
+    'Q2: Document',
+    'Q3: Professor\'s contact',
     'Q4: Classroom',
     'Q5: 30th Building Map'
   ];
