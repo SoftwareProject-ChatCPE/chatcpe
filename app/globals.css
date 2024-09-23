@@ -1,20 +1,9 @@
+@import 'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap';
+@import 'flowbite/dist/flowbite.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import 'flowbite/dist/flowbite.css';
-
-/* styles/Login.css */
-
-/* .login-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: #F1EAFF;
-}
- */
-
 
 /* _______________________________Question page_____________________________________ */
 
@@ -47,8 +36,8 @@ header {
 /* background */
 
 *{
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 .area{

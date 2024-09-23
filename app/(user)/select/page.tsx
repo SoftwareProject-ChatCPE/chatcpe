@@ -18,7 +18,7 @@ const Selectpage = () => {
                 Scholarship
               </Link>
               <button className="bg-[#9e7fec] text-[#E6FFFD] font-bold rounded-lg p-4 m-2 transition hover:bg-[#E5D9F2] hover:text-[#82659D] hover:scale-110">
-                Professor's Contact
+                Professor Contact
               </button>
               <button className="bg-[#9e7fec] text-[#E6FFFD] font-bold rounded-lg p-4 m-2 transition hover:bg-[#E5D9F2] hover:text-[#82659D] hover:scale-110">
                 Finding Classroom

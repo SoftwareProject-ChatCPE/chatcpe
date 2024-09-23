@@ -1,5 +1,4 @@
 "use client";
-// pages/index.tsx
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from "next/link";
@@ -36,7 +35,7 @@ export default function Home() {
       <Head>
         <title>ChatCPE</title>
         <meta name="description" content="A basic screening bot" />
-        <link href="'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap'" rel="stylesheet"></link>
+
       </Head>
 
       <main className="bg-[#F1EAFF] p-6 flex flex-col items-center mt-[3%] z-40 relative min-h-screen">
@@ -64,18 +63,18 @@ export default function Home() {
 
         {/* Carousel Section */}
         <div className="w-full max-w-xl mt-8 z-10">
-          <div className="relative h-10 overflow-hidden text-center text-2xl text-purple-700 font-semibold font-[Montserrat]">
+          <div className="relative h-10 overflow-hidden text-center text-2xl text-purple-700 font-semibold">
             <div key={currentIndex} className="absolute w-full animate-slide">{messages[currentIndex]}</div>
           </div>
           <div className="flex justify-center space-x-4 mt-4">
             <button
-              onClick={handlePrevClick}
-              className="bg-[#9e7fec] text-[#E6FFFD] px-4 py-2 rounded-lg font-semibold font-[Montserrat] hover:bg-[#E5D9F2] hover:text-[#82659D] active:bg-purple-900 active:scale-90 transform transition-transform duration-300">
+                onClick={handlePrevClick}
+                className="bg-[#9e7fec] text-[#E6FFFD] px-4 py-2 rounded-lg font-semibold font-[Montserrat] hover:bg-[#E5D9F2] hover:text-[#82659D] active:bg-purple-900 active:scale-90 transform transition-transform duration-300">
               &lt; Prev
             </button>
             <button
-              onClick={handleNextClick}
-              className="bg-[#9e7fec] text-[#E6FFFD] px-4 py-2 rounded-lg font-semibold font-[Montserrat] hover:bg-[#E5D9F2] hover:text-[#82659D] active:bg-purple-900 active:scale-90 transform transition-transform duration-300">
+                onClick={handleNextClick}
+                className="bg-[#9e7fec] text-[#E6FFFD] px-4 py-2 rounded-lg font-semibold font-[Montserrat] hover:bg-[#E5D9F2] hover:text-[#82659D] active:bg-purple-900 active:scale-90 transform transition-transform duration-300">
               Next &gt;
             </button>
           </div>

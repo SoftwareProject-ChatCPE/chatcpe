@@ -11,6 +11,18 @@ const userSchema = z.object({
     password: z.string().min(1,).max(8,'Password must be at least 8 characters'),
 })
 
+// Fetch all users
+export async function GET() {
+    try {
+        const users = await prisma.user.findMany();
+        return NextResponse.json(users, { status: 200 });
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        return new Response("Internal Server Error", { status: 500 });
+    }
+}
+
+//register
 export async function POST(req: Request) {
     try {
         const body = await req.json();
@@ -25,7 +37,6 @@ export async function POST(req: Request) {
         return NextResponse.json({ user: null, message: "Email already exists" }, { status: 409 });
         }
 
-        // Hash the password
         const hashedPassword = await hash(password, 10);
 
         const newUser = await prisma.user.create({
@@ -51,15 +62,5 @@ export async function POST(req: Request) {
     }
 }
 
-// Fetch all users
-export async function GET() {
-    try {
-        const users = await prisma.user.findMany();
-        return NextResponse.json(users, { status: 200 });
-    } catch (error) {
-        console.error('Error fetching users:', error);
-        return new Response("Internal Server Error", { status: 500 });
-    }
-}
 
-//login
+

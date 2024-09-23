@@ -11,10 +11,10 @@ datasource db {
 model Answer {
   answer_id   Int       @id @default(autoincrement())
   answer_text String
-  question_id Int?
+  question_id Int       @unique
   created_at  DateTime? @default(now()) @db.Timestamp(6)
   updated_at  DateTime? @updatedAt @db.Timestamp(6)
-  questions   Question? @relation(fields: [question_id], references: [question_id], onDelete: NoAction, onUpdate: NoAction, map: "question_id")
+  question    Question  @relation(fields: [question_id], references: [question_id], onDelete: NoAction, onUpdate: NoAction, map: "question_id")
 }
 
 model Category {
@@ -32,7 +32,7 @@ model Question {
   category_id   Int?
   created_at    DateTime? @default(now())
   updated_at    DateTime? @updatedAt @db.Timestamp(6)
-  answers       Answer[]
+  answer        Answer?
   category      Category? @relation(fields: [category_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "category_id")
 }
 
