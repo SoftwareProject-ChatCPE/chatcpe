@@ -6,6 +6,7 @@ import Link from "next/link";
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const messages = [
     'Q1: Scholarship',
     'Q2: Document',
@@ -35,11 +36,10 @@ export default function Home() {
       <Head>
         <title>ChatCPE</title>
         <meta name="description" content="A basic screening bot" />
-        <link rel="stylesheet" href="global.css"></link>
         <link href="'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap'" rel="stylesheet"></link>
       </Head>
 
-      <main className="bg-[#F1EAFF] p-6 flex flex-col items-center mt-[3%] z-40">
+      <main className="bg-[#F1EAFF] p-6 flex flex-col items-center mt-[3%] z-40 relative min-h-screen">
         <h1 className="text-[#8366CD] text-6xl mb-4 font-montserrat font-extrabold">
           Welcome to ChatCPE
         </h1>
@@ -52,7 +52,7 @@ export default function Home() {
             <Link href="/select">Enter</Link>
           </button>
 
-          <div className="relative z-59">
+          <div className="relative z-50">
             <button className="bg-[#9e7fec] text-[#E6FFFD] px-4 py-2 rounded-full hover:bg-[#E5D9F2] hover:text-[#82659D] transform hover:scale-110 transition-all duration-300 w-40 font-montserrat font-extrabold">
               <Link href='/sign-in'>Sign-in</Link>
             </button>
@@ -63,17 +63,19 @@ export default function Home() {
         </div>
 
         {/* Carousel Section */}
-        <div className="relative mt-8 z-100">
-          <div className="w-full h-10 overflow-hidden relative">
-            <div className="text-center text-2xl text-[#8366CD] animate-slideLeft">
-              {messages[currentIndex]}
-            </div>
+        <div className="w-full max-w-xl mt-8 z-10">
+          <div className="relative h-10 overflow-hidden text-center text-2xl text-purple-700 font-semibold font-[Montserrat]">
+            <div key={currentIndex} className="absolute w-full animate-slide">{messages[currentIndex]}</div>
           </div>
-          <div className="flex justify-center space-x-4 mt-4 z-110">
-            <button onClick={handlePrevClick} className="bg-[#9e7fec] text-[#E6FFFD] px-4 py-2 rounded hover:bg-[#E5D9F2] hover:text-[#82659D] transform hover:scale-110 transition-all duration-300">
+          <div className="flex justify-center space-x-4 mt-4">
+            <button
+              onClick={handlePrevClick}
+              className="bg-[#9e7fec] text-[#E6FFFD] px-4 py-2 rounded-lg font-semibold font-[Montserrat] hover:bg-[#E5D9F2] hover:text-[#82659D] active:bg-purple-900 active:scale-90 transform transition-transform duration-300">
               &lt; Prev
             </button>
-            <button onClick={handleNextClick} className="bg-[#9e7fec] text-[#E6FFFD] px-4 py-2 rounded hover:bg-[#E5D9F2] hover:text-[#82659D] transform hover:scale-110 transition-all duration-300">
+            <button
+              onClick={handleNextClick}
+              className="bg-[#9e7fec] text-[#E6FFFD] px-4 py-2 rounded-lg font-semibold font-[Montserrat] hover:bg-[#E5D9F2] hover:text-[#82659D] active:bg-purple-900 active:scale-90 transform transition-transform duration-300">
               Next &gt;
             </button>
           </div>
@@ -95,6 +97,17 @@ export default function Home() {
           </ul>
         </div>
       </main>
+
+      <style jsx>{`
+        @keyframes slideLeft {
+          0% { transform: translateX(100%); opacity: 0; }
+          10%, 90% { transform: translateX(0); opacity: 1; }
+          100% { transform: translateX(-100%); opacity: 0; }
+        }
+        .animate-slide {
+          animation: slideLeft 5s ease-in-out; /* Duration and easing */
+        }
+      `}</style>
     </>
   );
 }

@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from "next/navigation";
+import Link from 'next/link';
 
 const FormSchema = z.object({
     email: z.string().min(1, 'Email is required').email('Invalid email'),
@@ -98,6 +99,11 @@ const SignInForm = () => {
                 <p className="text-center text-[#8366CD] text-sm cursor-pointer hover:underline mt-4">
                     Don't have an account yet? <a href="/sign-up" className="text-purple-900 cursor-pointer hover:underline font-bold">Sign up</a>
                 </p>
+            </div>
+            <div className="absolute bottom-4 right-4">
+                <Link href="/" className="bg-[#8366CD] border-none text-white py-2 text-sm px-4 hover:bg-purple-400 text-center inline-block  cursor-pointer rounded-full">
+                    Back to Home
+                </Link>
             </div>
         </div>
 

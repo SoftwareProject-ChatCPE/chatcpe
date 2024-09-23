@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from "next/navigation";
+import Link from 'next/link';
 
 type FormValues = {
     name: string;
@@ -157,7 +158,13 @@ const SignUpForm = () => {
                     Already have an account? <a href="/sign-in" className="text-purple-900 cursor-pointer hover:underline font-bold">Sign In</a>
                 </p>
             </div>
+            <div className="absolute bottom-4 right-4">
+                <Link href="/" className="bg-[#8366CD] border-none text-white py-2 text-sm px-4 hover:bg-purple-400 text-center inline-block  cursor-pointer rounded-full">
+                    Back to Home
+                </Link>
+            </div>
         </div>
+        
 
 
     );
