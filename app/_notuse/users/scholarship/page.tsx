@@ -22,7 +22,6 @@ const Scholarshippage = () => {
                         </nav>
                     </header>
                     <main>
-
                         <div className="content">
                             <div className="info-container">
                                 <p>ห้องพัฒนาคุณภาพนักศึกษา ชั้น 2 อาคารเรียนรวม 3 ชั้น</p>

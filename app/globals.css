@@ -172,3 +172,34 @@ header {
     }
 
 }
+
+/* professor */
+
+
+/* picture in classroom */
+@media screen and (max-width: 768px) {
+    .image-wrapper {
+        width: 80%;  
+        margin: 20px auto;  
+        display: flex;  
+        justify-content: center;
+    }
+
+    img {
+        width: 100%; 
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .image-wrapper {
+        width: 50%;
+        margin: 20px auto; 
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+

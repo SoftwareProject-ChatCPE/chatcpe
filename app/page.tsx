@@ -9,10 +9,8 @@ export default function Home() {
 
   const messages = [
     'Q1: Scholarship',
-    'Q2: Document.',
-    'Q3: Professor\'s contact.',
-    'Q4: Classroom',
-    'Q5: 30th Building Map'
+    'Q2: Professor\'s contact',
+    'Q3: Classroom'
   ];
 
   useEffect(() => {
