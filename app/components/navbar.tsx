@@ -12,6 +12,10 @@ const Navbar = () => {
     setIsOpen(!isOpen); // Toggle the mobile menu
   };
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen); // Toggle the dropdown on click
+  };
+
   return (
     <header className="fixed top-0 left-0 w-full bg-[#8366CD] p-5 shadow-md flex justify-between items-center z-[1000]">
       <div className="text-left">
@@ -29,28 +33,32 @@ const Navbar = () => {
           <li><Link href="/select" className="text-[#E6FFFD] font-bold">Menu</Link></li>
           <li><Link href="/map" className="text-[#E6FFFD] font-bold">Map</Link></li>
           {/* Dropdown for Questions */}
-          <li 
-            className="relative"
-            onMouseEnter={() => setDropdownOpen(true)} // Show dropdown on hover
-            onMouseLeave={() => setDropdownOpen(false)} // Hide dropdown on mouse leave
-          >
-            <span className="text-[#E6FFFD] font-bold cursor-pointer">Questions</span>
-            <FiInfo 
-              className="inline-block text-[#E6FFFD] ml-1 cursor-pointer" 
+          <li className="relative">
+            <span className="text-[#E6FFFD] font-bold cursor-pointer" onClick={toggleDropdown}>
+              Questions
+            </span>
+            <FiInfo
+              className="inline-block text-[#E6FFFD] ml-1 cursor-pointer"
               onMouseEnter={() => setInfoOpen(true)} // Show tooltip on hover
               onMouseLeave={() => setInfoOpen(false)} // Hide tooltip on mouse leave
               size={16}
             />
-            {infoOpen && (
-              <div className="absolute left-0 bg-white text-gray-700 p-2 rounded shadow-lg mt-1 z-20">
-                Hover over "Questions" to find more information about available resources.
-              </div>
-            )}
+
+            {/* Dropdown Menu */}
             {dropdownOpen && (
-              <ul className="absolute left-0 bg-[#8366CD] mt-2 rounded-lg shadow-lg p-2 space-y-2">
-                <li><Link href="/classroom" className="text-[#E6FFFD] font-bold">Classroom</Link></li>
-                <li><Link href="/professor" className="text-[#E6FFFD] font-bold">Professor</Link></li>
-                <li><Link href="/scholarship" className="text-[#E6FFFD] font-bold">Scholarship</Link></li>
+              <ul
+                className="absolute left-0 bg-[#8366CD] mt-2 rounded-lg shadow-lg p-2 space-y-2 transition duration-200"
+                onMouseLeave={() => setDropdownOpen(false)} // Close on mouse leave if you want this behavior
+              >
+                <li>
+                  <Link href="/classroom" className="text-[#E6FFFD] font-bold">Classroom</Link>
+                </li>
+                <li>
+                  <Link href="/professor" className="text-[#E6FFFD] font-bold">Professor</Link>
+                </li>
+                <li>
+                  <Link href="/scholarship" className="text-[#E6FFFD] font-bold">Scholarship</Link>
+                </li>
               </ul>
             )}
           </li>
