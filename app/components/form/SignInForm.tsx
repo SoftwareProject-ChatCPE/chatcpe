@@ -97,7 +97,7 @@ const SignInForm = () => {
                     <button type="submit" className=" w-full bg-[#8366CD] text-white py-2 px-4 rounded-full text-sm">Sign In</button>
                 </form>
                 <p className="text-center text-[#8366CD] text-sm cursor-pointer hover:underline mt-4">
-                    Don't have an account yet? <a href="/sign-up" className="text-purple-900 cursor-pointer hover:underline font-bold">Sign up</a>
+                   <a href="/sign-up" className="text-purple-900 cursor-pointer hover:underline font-bold">Sign up</a>
                 </p>
             </div>
             <div className="absolute bottom-4 right-4">
