@@ -1,10 +1,10 @@
-"use client";  // Add this line to indicate a Client Component
+"use client";
 
 import React, { useState } from 'react';
 import Link from "next/link";
 import Image from 'next/image';
-import CircleFollowMouse from '../../components/CircleFollowMouse';
-import Navbar from "../../components/navbar";  // Keep the old Navbar
+
+import UserNavbar from "../../components/UserNavbar";  // Keep the old UserNavbar
 
 const Classroompage = () => {
     const [activeFloor, setActiveFloor] = useState(null);  // Default active floor is null since no floor is selected by default
@@ -47,12 +47,12 @@ const Classroompage = () => {
     };
 
     // Handle floor click
-    const handleFloorClick = (floor) => {
+    const handleFloorClick = (floor: keyof typeof floorContent) => {
         setActiveFloor(floor);
     };
 
     // Function to handle the search
-    const handleSearch = (e) => {
+    const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const searchTerm = searchFloor.toUpperCase();
 
@@ -140,8 +140,8 @@ const Classroompage = () => {
 
     return (
         <>
-            {/* Old Horizontal Navbar */}
-            <Navbar />
+            {/* Old Horizontal UserNavbar */}
+            <UserNavbar />
 
             {/* Search Bar */}
             <form onSubmit={handleSearch} className="fixed top-[120px] right-5 w-full max-w-[300px] flex items-center">
@@ -157,7 +157,7 @@ const Classroompage = () => {
                 </button>
             </form>
 
-            {/* New Vertical Box-Style Navbar */}
+            {/* New Vertical Box-Style UserNavbar */}
             <nav className="fixed top-20 left-5 h-full w-16 md:w-20 lg:w-24 flex flex-col items-center justify-between py-8 text-[#E6FFFD] font-bold overflow-auto">
                 <div className="flex flex-col space-y-2">
                     <button
@@ -211,7 +211,6 @@ const Classroompage = () => {
                 </div>
             </nav>
 
-            <CircleFollowMouse />
 
             {/* Main Content */}
             <main className="mt-24 p-5 ml-24">
@@ -238,12 +237,6 @@ const Classroompage = () => {
                 </section>
             </main>
 
-            {/* Return Button */}
-            <Link href="/select">
-                <div className="bg-[#9e7fec] text-[#E6FFFD] px-4 py-2 rounded hover:bg-[#E5D9F2] hover:text-[#82659D] transform hover:scale-110 transition-all duration-300 flex justify-between items-center fixed bottom-10 right-10">
-                    Return
-                </div>
-            </Link>
         </>
     );
 }

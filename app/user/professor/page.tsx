@@ -1,8 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import CircleFollowMouse from "../../components/CircleFollowMouse";
-import Navbar from "../../components/navbar";
+import UserNavbar from "../../components/UserNavbar";
 
 const professors = [
     {
@@ -38,8 +37,7 @@ const professors = [
 const Professor = () => {
     return (
         <>
-            <Navbar />
-            <CircleFollowMouse />
+            <UserNavbar />
 
             <div className="flex flex-wrap justify-evenly mt-24 w-11/12 mx-auto max-w-4xl">
                 {professors.map((professor, index) => (

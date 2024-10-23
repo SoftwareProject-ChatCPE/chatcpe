@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from 'react';
-import Head from 'next/head';
 import Link from "next/link";
+import { Session } from "next-auth";
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [session, setSession] = useState<Session | null>(null);
   const messages = [
     'Q1: Scholarship',
     'Q2: Document',
@@ -15,6 +15,13 @@ export default function Home() {
   ];
 
   useEffect(() => {
+    const fetchSession = async () => {
+      const response = await fetch('/api/session');
+      const data = await response.json();
+      setSession(data.session);
+    };
+    fetchSession();
+
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % messages.length);
     }, 5000); // Change message every 5 seconds
@@ -32,12 +39,6 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>ChatCPE</title>
-        <meta name="description" content="A basic screening bot" />
-
-      </Head>
-
       <main className="bg-[#F1EAFF] p-6 flex flex-col items-center mt-[3%] z-40 relative min-h-screen">
         <h1 className="text-[#8366CD] text-6xl mb-4 font-montserrat font-extrabold">
           Welcome to ChatCPE
@@ -48,16 +49,24 @@ export default function Home() {
 
         <div className="flex space-x-4 z-50">
           <button className="bg-[#9e7fec] text-[#E6FFFD] px-4 py-2 rounded-full hover:bg-[#E5D9F2] hover:text-[#82659D] transform hover:scale-110 transition-all duration-300 w-40 font-montserrat font-extrabold">
-            <Link href="/select">Enter</Link>
+            <Link href="/user">Enter</Link>
           </button>
 
           <div className="relative z-50">
-            <button className="bg-[#9e7fec] text-[#E6FFFD] px-4 py-2 rounded-full hover:bg-[#E5D9F2] hover:text-[#82659D] transform hover:scale-110 transition-all duration-300 w-40 font-montserrat font-extrabold">
-              <Link href='/sign-in'>Sign-in</Link>
-            </button>
-            <p className="text-sm text-red-500 mt-2 absolute -bottom-6 left-8">
-              ** for staff only
-            </p>
+            {session ? (
+              <button className="bg-[#4CAF50] text-[#E6FFFD] px-4 py-2 rounded-full hover:bg-[#45A049] hover:text-[#E6FFFD] transform hover:scale-110 transition-all duration-300 w-40 font-montserrat font-extrabold">
+                <Link href='/admin'>Dashboard</Link>
+              </button>
+            ) : (
+              <button className="bg-[#9e7fec] text-[#E6FFFD] px-4 py-2 rounded-full hover:bg-[#E5D9F2] hover:text-[#82659D] transform hover:scale-110 transition-all duration-300 w-40 font-montserrat font-extrabold">
+                <Link href='/sign-in'>Sign-in</Link>
+              </button>
+            )}
+            {!session && (
+              <p className="text-sm text-red-500 mt-2 absolute -bottom-6 left-8">
+                ** for staff only
+              </p>
+            )}
           </div>
         </div>
 
@@ -103,9 +112,7 @@ export default function Home() {
           10%, 90% { transform: translateX(0); opacity: 1; }
           100% { transform: translateX(-100%); opacity: 0; }
         }
-        .animate-slide {
-          animation: slideLeft 5s ease-in-out; /* Duration and easing */
-        }
+       
       `}</style>
     </>
   );

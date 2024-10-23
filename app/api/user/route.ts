@@ -8,7 +8,7 @@ const userSchema = z.object({
     name: z.string(),
     surname: z.string(),
     email: z.string().email(),
-    password: z.string().min(1,).max(8,'Password must be at least 8 characters'),
+    password: z.string().min(8,).max(30,'Password must be at least 8 characters'),
 })
 
 // Fetch all users
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
             { status: 201 }
         );
     } catch (error) {
-        // console.error('Error creating user:', error);  // Log the error for debugging
+        console.error('Error creating user:', error);  // Log the error for debugging
         return new Response("Internal Server Error", { status: 500 });
     }
 }

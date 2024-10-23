@@ -2,8 +2,7 @@ import React from 'react';
 import Image from "next/image";
 import Head from 'next/head';
 import Link from "next/link";
-import CircleFollowMouse from '../../components/CircleFollowMouse';
-import Navbar from "../../components/navbar";
+import UserNavbar from "../../components/UserNavbar";
 
 const scholarshipOptions = [
     {
@@ -59,8 +58,7 @@ const ContactInfo = () => (
 const Scholarshippage = () => {
     return (
         <>
-            <Navbar />
-            <CircleFollowMouse />
+            <UserNavbar />
             <div className="min-h-screen bg-[#F1EAFF] text-[#4a4a4a] font-sans font-bold">
                 <main className="mt-32 p-5">
                     <section>

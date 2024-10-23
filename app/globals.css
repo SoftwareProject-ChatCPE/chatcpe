@@ -17,6 +17,7 @@ body {
   margin: 0;
   padding: 0;
   text-align: center;
+    overflow: hidden;
 }
 
 header {
@@ -165,7 +166,7 @@ header {
 /* professor */
 
 
-/* picture in classroom */
+/* picture in floormap */
 @media screen and (max-width: 768px) {
     .image-wrapper {
         width: 80%;  
@@ -191,4 +192,12 @@ header {
         height: auto;
     }
 }
+@layer components {
+    .flowbite-navbar .hover\:text-fuchsia-200:hover {
+        color: #FBCFE8 !important;
+    }
 
+    .flowbite-dropdown .hover\:text-fuchsia-200:hover {
+        color: #FBCFE8 !important;
+    }
+}

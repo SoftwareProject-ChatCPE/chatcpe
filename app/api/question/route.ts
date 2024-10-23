@@ -3,46 +3,70 @@ import { PrismaClient } from '@prisma/client';
 import * as z from 'zod';
 const prisma = new PrismaClient();
 
-
-// Define a schema for input validation
 const questionSchema = z.object({
     question_text: z.string(),
     visit_count: z.number().optional(),
     category_id: z.number(),
-    answers: z.array(z.object({
-        answer_text: z.string(),
-    })),
+    answer_text: z.string().optional(),
 });
+//get all questions
+export async function GET(request: Request) {
+    try {
+        const questions = await prisma.question.findMany({
+            include: {
+                category: {
+                    select: {
+                        category_id: true,
+                        category_name: true,
+                    },
+                },
+                answer: {
+                    select: {
+                        answer_id: true,
+                        answer_text: true,
+                    },
+                },
+            },
+        });
 
-
-
-// Create a new question in a category with answers
+        return NextResponse.json({ questions });
+    } catch (error) {
+        console.error("Error getting questions:", error);
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    }
+}
+// create a new question
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const {question_text, visit_count, category_id, answers} = questionSchema.parse(body);
-        // Check if category exists
-        if (!await prisma.category.findUnique({where: {category_id}})) {
-            return NextResponse.json({question: null, message: "Category not found"}, {status: 404});
+        const { question_text, visit_count, category_id, answer_text } = questionSchema.parse(body);
+
+        const categoryExists = await prisma.category.findUnique({ where: { category_id } });
+        if (!categoryExists) {
+            return NextResponse.json({ question: null, message: "Category not found" }, { status: 404 });
         }
-        // Create a new question with
+
         const newQuestion = await prisma.question.create({
             data: {
                 question_text,
                 visit_count,
-                category_id,
-                answers: {
-                    create: answers,
+                category: {
+                    connect: { category_id }
+                },
+                answer: {
+                    create: {
+                        answer_text: answer_text || "", // Use provided answer_text or empty string
+                    },
                 },
             },
         });
 
         return NextResponse.json(
-            {question: newQuestion, message: "Question created successfully"},
-            {status: 201}
+            { question: newQuestion, message: "Question created successfully" },
+            { status: 201 }
         );
     } catch (error) {
-        console.error("Error creating question:", error);
-        return NextResponse.json({error: "Internal Server Error"}, {status: 500});
+        console.error("Error creating user:", error);
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
