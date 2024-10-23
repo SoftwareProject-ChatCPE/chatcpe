@@ -2,6 +2,8 @@
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import Swal from "sweetalert2";
+import Link from "next/link";
+import {Button, Spinner} from "flowbite-react";
 
 type AnswerData = {
     answer_id: number;
@@ -36,8 +38,9 @@ const QuestionPage = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center h-screen">
-                <span className="visually-hidden">Loading...</span>
+            <div className="flex items-center justify-center h-screen text-3xl">
+                <Spinner size="xl"/>
+                <span className="ml-4 text-lg font-bold">Loading...</span>
             </div>
         );
     }
@@ -85,6 +88,14 @@ const QuestionPage = () => {
                     </div>
                 </section>
             </main>
+            <Link href="/user">
+                <Button
+                    color="blue"
+                    className="fixed bottom-7 right-7 shadow-lg rounded-full p-1 flex items-center"
+                >
+                    back
+                </Button>
+            </Link>
         </div>
     );
 };

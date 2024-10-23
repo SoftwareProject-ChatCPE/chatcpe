@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import Link from "next/link";
 import Image from 'next/image';
 
-import UserNavbar from "../../components/UserNavbar";  // Keep the old UserNavbar
+import UserNavbar from "../../components/UserNavbar";
+import {Button} from "flowbite-react";  // Keep the old UserNavbar
 
 const Classroompage = () => {
     const [activeFloor, setActiveFloor] = useState(null);  // Default active floor is null since no floor is selected by default
@@ -236,7 +237,14 @@ const Classroompage = () => {
                     )}
                 </section>
             </main>
-
+            <Link href="/user">
+                <Button
+                    color="blue"
+                    className="fixed bottom-7 right-7 shadow-lg rounded-full p-1 flex items-center"
+                >
+                    back
+                </Button>
+            </Link>
         </>
     );
 }
