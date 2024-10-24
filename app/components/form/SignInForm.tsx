@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import { Button, Spinner } from 'flowbite-react';
-import {useState} from "react";  // Import Flowbite components
+import {useState} from "react";
 
 const FormSchema = z.object({
     email: z.string().min(1, 'Email is required').email('Invalid email'),

@@ -15,6 +15,11 @@ export async function GET() {
                    category_name: true,
                },
            },
+           answer: {
+               select:{
+                     answer_text: true,
+               }
+           }
        },
        orderBy: {
            visit_count: 'desc',
