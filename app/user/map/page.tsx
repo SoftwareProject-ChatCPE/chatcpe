@@ -1,4 +1,6 @@
 import React from 'react';
+import {Button} from "flowbite-react";
+import Link from "next/link";
 
 const page = () => {
     return (
@@ -21,6 +23,13 @@ const page = () => {
                         </div>
                     </section>
                 </main>
+
+                <Button as={Link} href="/user"
+                        color='light' pill
+                        className="fixed bottom-7 right-7 p-1 flex items-center bg-[#9e7fec] text-white"
+                >
+                    back
+                </Button>
             </div>
         </>
     );
