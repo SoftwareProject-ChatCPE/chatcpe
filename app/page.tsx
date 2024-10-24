@@ -73,7 +73,7 @@ export default function Home() {
 
             <div className="relative z-50">
               {session ? (
-                  <Button className="w-40 font-montserrat font-extrabold" color="green" as={Link} href={'/admin'}>
+                  <Button className="w-40 font-montserrat font-extrabold bg-green-100" color="green" as={Link} href={'/admin'}>
                     Dashboard
                   </Button>
               ) : (

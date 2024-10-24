@@ -7,8 +7,9 @@ import Image from 'next/image';
 import UserNavbar from "../../components/UserNavbar";
 import {Button} from "flowbite-react";  // Keep the old UserNavbar
 
-const Classroompage = () => {
-    const [activeFloor, setActiveFloor] = useState(null);  // Default active floor is null since no floor is selected by default
+
+const Classroom = () => {
+    const [activeFloor, setActiveFloor] = useState<2 | "M" | 3 | 4 | 5 | 6 | 7 | 8 | null>(null);  // Default active floor is null since no floor is selected by default
     const [searchFloor, setSearchFloor] = useState(''); // Add state for search input
 
     // Content for each floor
@@ -95,11 +96,11 @@ const Classroompage = () => {
         }
         // Handle patterns for '5xx'
         else if (searchTerm.startsWith('5')) {
-            const validRooms = ['Networkroom', '529', '595', '501', '559', '503', '504', '505', '508', '509', '510', '532', '514', '515', '516', '518', '519', '520', '521', '558'];
+            const validRooms = ['NetworkRoom', '529', '595', '501', '559', '503', '504', '505', '508', '509', '510', '532', '514', '515', '516', '518', '519', '520', '521', '558'];
             if (validRooms.includes(searchTerm)) {
                 setActiveFloor(5);
             } else {
-                alert("Invalid room number on the 5th floor! Please search for valid rooms: Networkroom, 501-595 (excluding some ranges).");
+                alert("Invalid room number on the 5th floor! Please search for valid rooms: NetworkRoom, 501-595 (excluding some ranges).");
             }
         }
         // Handle patterns for '6xx'
@@ -222,13 +223,13 @@ const Classroompage = () => {
                             <p>{floorContent[activeFloor]?.text}</p> {/* Show content for the selected floor */}
 
                             {/* Wrap the image in a div with class image-wrapper */}
-                            <div className="image-wrapper mt-10 flex justify-center">
+                            <div className="image-wrapper mt-6 flex justify-center mb-10">
                                 <Image
                                     src={floorContent[activeFloor]?.imageSrc}
                                     alt={`Image of ${activeFloor} floor`}
                                     width={500}
                                     height={300}
-                                    className="rounded-lg shadow-lg object-cover w-full max-w-[600px] h-auto"
+                                    className="rounded-lg shadow-lg object-cover w-full max-w-[600px] h-auto transition hover:scale-105"
                                 />
                             </div>
                         </>
@@ -237,16 +238,14 @@ const Classroompage = () => {
                     )}
                 </section>
             </main>
-            <Link href="/user">
-                <Button
-                    color="blue"
-                    className="fixed bottom-7 right-7 shadow-lg rounded-full p-1 flex items-center"
-                >
-                    back
-                </Button>
-            </Link>
+            <Button as={Link} href="/user"
+                    color='light' pill
+                    className="fixed bottom-7 right-7 p-1 flex items-center bg-[#9e7fec] text-white"
+            >
+                back
+            </Button>
         </>
     );
 }
 
-export default Classroompage;
+export default Classroom;

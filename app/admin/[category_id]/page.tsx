@@ -1,12 +1,10 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import {Table, Button, Modal, TextInput, Spinner, Textarea} from 'flowbite-react';
+import {Table, Button, Modal, Spinner, Textarea} from 'flowbite-react';
 import Swal from 'sweetalert2';
-import {redirect, useParams} from 'next/navigation';
+import {useParams} from 'next/navigation';
 import Link from "next/link";
-import {FloatingPortal} from "@floating-ui/react";
-import {authOptions} from "@/lib/auth";
-import {getServerSession} from "next-auth";
+
 
 type Answer = {
     answer_id: number;
@@ -233,14 +231,12 @@ const QuestionManagement = () => {
                     )}
                 </Table.Body>
             </Table>
-            <Link href="/admin/category">
-                <Button
-                    color="blue"
-                    className="fixed bottom-7 right-7 shadow-lg rounded-full p-1 flex items-center"
-                >
-                   back
-                </Button>
-            </Link>
+            <Button as={Link} href="/admin/category"
+                    color='light' pill
+                    className="fixed bottom-7 right-7 p-1 flex items-center bg-[#9e7fec] text-white"
+            >
+                back
+            </Button>
             <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <Modal.Header>{editQuestionId ? 'Edit Question' : 'Add Question'}</Modal.Header>
                 <Modal.Body>

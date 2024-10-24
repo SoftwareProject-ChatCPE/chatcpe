@@ -1,10 +1,7 @@
-// app/user/page.tsx
-
 "use client";
 import React, { useEffect, useState } from 'react';
 import Link from "next/link";
-import UserNavbar from '@/app/components/UserNavbar';
-import {Button, Spinner} from "flowbite-react";
+import {Spinner} from "flowbite-react";
 
 type Category = {
   category_id: number;
@@ -53,12 +50,12 @@ const Selectpage = () => {
                     <Link
                         key={category.category_id}
                         href={`/user/${category.category_id}`}
-                        className="bg-[#9e7fec] text-[#E6FFFD] font-bold rounded-lg p-4 m-2 transition hover:bg-[#E5D9F2] hover:text-[#82659D] hover:scale-110"
+                        className="bg-[#9e7fec] text-white rounded-lg p-4 m-2 transition hover:bg-[#E5D9F2] hover:text-[#82659D] hover:scale-110"
                     >
                       {category.category_name}
                     </Link>
                 ))}
-                <Link href="/user/floormap" className="bg-[#9e7fec] text-[#E6FFFD] font-bold rounded-lg p-4 m-2 transition hover:bg-[#E5D9F2] hover:text-[#82659D] hover:scale-110">
+                <Link href="/user/floormap" className="bg-[#9e7fec] text-white font-bold rounded-lg p-4 m-2 transition hover:bg-[#E5D9F2] hover:text-[#82659D] hover:scale-110">
                   Floor map
                 </Link>
               </div>
