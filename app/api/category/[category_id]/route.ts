@@ -20,7 +20,7 @@ export async function GET(request: Request, { params }: { params: { category_id:
 
         return NextResponse.json(category, { status: 200 });
     } catch (error) {
-        console.error("Error fetching user:", error);
+        console.error("Error fetching category:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
@@ -65,9 +65,9 @@ export async function DELETE(request: Request, { params }: { params: { category_
         const categoryId = parseInt(params.category_id, 10);
 
         if (isNaN(categoryId)) {
-            return NextResponse.json({ error: "Invalid user ID provided" }, { status: 400 });
+            return NextResponse.json({ error: "Invalid category ID provided" }, { status: 400 });
         }
-        //check if user has questions and return error if it does
+        //check if category has questions and return error if it does
         const questions = await prisma.question.findMany({
             where: { category_id: categoryId },
         });
@@ -80,7 +80,7 @@ export async function DELETE(request: Request, { params }: { params: { category_
 
         return NextResponse.json({ message: "Category deleted successfully" }, { status: 200 });
     } catch (error) {
-        console.error("Error deleting user:", error);
+        console.error("Error deleting category:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }

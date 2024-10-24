@@ -45,6 +45,10 @@ export async function POST(request: Request) {
         if (!categoryExists) {
             return NextResponse.json({ question: null, message: "Category not found" }, { status: 404 });
         }
+        // Validate if data is empty
+        if (!question_text|| !answer_text) {
+            return NextResponse.json({ question: null, message: "Question text and answer text is required" }, { status: 400 });
+        }
 
         const newQuestion = await prisma.question.create({
             data: {
@@ -60,13 +64,12 @@ export async function POST(request: Request) {
                 },
             },
         });
-
         return NextResponse.json(
             { question: newQuestion, message: "Question created successfully" },
             { status: 201 }
         );
     } catch (error) {
-        console.error("Error creating user:", error);
+        console.error("Error creating category:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }

@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from "next/link";
 import UserNavbar from '@/app/components/UserNavbar';
+import {Button, Spinner} from "flowbite-react";
 
 type Category = {
   category_id: number;
@@ -34,8 +35,9 @@ const Selectpage = () => {
 
   if (loading) {
     return (
-        <div className="flex items-center justify-center h-screen">
-          <span className="visually-hidden">Loading...</span>
+        <div className="flex items-center justify-center h-screen text-3xl">
+          <Spinner size="xl"/>
+          <span className="ml-4 text-lg font-bold">Loading...</span>
         </div>
     );
   }

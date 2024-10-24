@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Modal, TextInput } from 'flowbite-react';
+import { Table, Button, Modal, Spinner, Textarea } from 'flowbite-react';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
 
@@ -9,6 +9,9 @@ type Category = {
     category_name: string;
     created_at: string;
     updated_at: string;
+    _count: {
+        questions: number;
+    };
 };
 
 const CategoryManagement = () => {
@@ -37,6 +40,21 @@ const CategoryManagement = () => {
         fetchCategories();
     }, []);
 
+    // Open Add Modal: Clear inputs before opening
+    const handleOpenAddModal = () => {
+        setNewCategory(''); // Clear the category name for new entry
+        setEditCategoryId(null); // Clear the editing ID
+        setEditCategoryName(''); // Clear the editing category name
+        setIsModalOpen(true); // Open the modal
+    };
+
+    // Open Edit Modal: Populate the fields with the category info
+    const handleOpenEditModal = (category: Category) => {
+        setEditCategoryId(category.category_id); // Set the ID to be edited
+        setEditCategoryName(category.category_name); // Populate the field with the category name
+        setIsModalOpen(true); // Open the modal
+    };
+
     // Add new category
     const handleAddCategory = async () => {
         try {
@@ -49,13 +67,21 @@ const CategoryManagement = () => {
             });
 
             if (response.ok) {
-                Swal.fire('Success', 'Category added successfully', 'success');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Category added successfully',
+                    timer: 1000,
+                });
                 fetchCategories();
                 setNewCategory('');
                 setIsModalOpen(false);
             } else {
                 const errorData = await response.json();
-                Swal.fire('Error', errorData.error || 'Failed to add category', 'error');
+                Swal.fire({
+                    icon: 'error',
+                    title: errorData.error || 'Failed to add category',
+                    timer: 1000,
+                });
             }
         } catch (error) {
             Swal.fire('Error', 'Something went wrong', 'error');
@@ -75,14 +101,22 @@ const CategoryManagement = () => {
             });
 
             if (response.ok) {
-                Swal.fire('Success', 'Category updated successfully', 'success');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Category updated successfully',
+                    timer: 1000,
+                });
                 fetchCategories();
                 setEditCategoryId(null);
                 setEditCategoryName('');
                 setIsModalOpen(false);
             } else {
                 const errorData = await response.json();
-                Swal.fire('Error', errorData.error || 'Failed to update category', 'error');
+                Swal.fire({
+                    icon: 'error',
+                    title: errorData.error || 'Failed to update category',
+                    timer: 1000,
+                });
             }
         } catch (error) {
             Swal.fire('Error', 'Something went wrong', 'error');
@@ -109,10 +143,10 @@ const CategoryManagement = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 p-8 relative">
+        <div className="min-h-screen bg-gray-100 p-8 relative mt-16">
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-3xl font-bold text-[#8366CD]">Manage Categories</h1>
-                <Button onClick={() => setIsModalOpen(true)} color="purple">
+                <Button onClick={handleOpenAddModal} color="purple">
                     Add Category
                 </Button>
             </div>
@@ -121,28 +155,35 @@ const CategoryManagement = () => {
                 <Table.Head>
                     <Table.HeadCell>ID</Table.HeadCell>
                     <Table.HeadCell>Category Name</Table.HeadCell>
+                    <Table.HeadCell>Number of Questions</Table.HeadCell>
                     <Table.HeadCell>Actions</Table.HeadCell>
                 </Table.Head>
                 <Table.Body>
                     {loading ? (
                         <tr>
-                            <td colSpan={3} className="text-center p-4">
-                                Loading...
+                            <td colSpan={4} className="text-center p-4">
+                                <Spinner size="xl" />
+                                <span className="ml-4 text-lg font-bold">Loading...</span>
                             </td>
                         </tr>
                     ) : (
                         categories.map((category) => (
                             <Table.Row key={category.category_id} className="bg-white">
                                 <Table.Cell>{category.category_id}</Table.Cell>
-                                <Table.Cell>{category.category_name}</Table.Cell>
+                                <Table.Cell className="whitespace-normal break-words max-w-xs">
+                                    {category.category_name}
+                                </Table.Cell>
+                                <Table.Cell>{category._count.questions}</Table.Cell>
                                 <Table.Cell>
                                     <div className="flex space-x-2">
+                                        <Link
+                                            href={`/admin/${category.category_id}`}
+                                            className="text-white bg-[#9e7fec] hover:bg-[#E5D9F2] hover:text-[#82659D] font-bold rounded-lg px-3 py-1 transition"
+                                        >
+                                            Manage Questions
+                                        </Link>
                                         <Button
-                                            onClick={() => {
-                                                setEditCategoryId(category.category_id);
-                                                setEditCategoryName(category.category_name);
-                                                setIsModalOpen(true);
-                                            }}
+                                            onClick={() => handleOpenEditModal(category)}
                                             color="warning"
                                             size="xs"
                                         >
@@ -155,12 +196,6 @@ const CategoryManagement = () => {
                                         >
                                             Delete
                                         </Button>
-                                        <Link
-                                            href={`/questions/${category.category_id}`}
-                                            className="text-white bg-[#9e7fec] hover:bg-[#E5D9F2] hover:text-[#82659D] font-bold rounded-lg px-3 py-1 transition"
-                                        >
-                                            Manage Questions
-                                        </Link>
                                     </div>
                                 </Table.Cell>
                             </Table.Row>
@@ -173,7 +208,9 @@ const CategoryManagement = () => {
             <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <Modal.Header>{editCategoryId ? 'Edit Category' : 'Add Category'}</Modal.Header>
                 <Modal.Body>
-                    <TextInput
+                    {/* Category Label and Textarea */}
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Category Name</label>
+                    <Textarea
                         value={editCategoryId ? editCategoryName : newCategory}
                         onChange={(e) => {
                             if (editCategoryId) {
@@ -182,7 +219,9 @@ const CategoryManagement = () => {
                                 setNewCategory(e.target.value);
                             }
                         }}
-                        placeholder="Category name"
+                        placeholder="Enter category name"
+                        rows={3}
+                        className="w-full p-2 border border-gray-300 rounded-lg mb-4"
                     />
                 </Modal.Body>
                 <Modal.Footer>

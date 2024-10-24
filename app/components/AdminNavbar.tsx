@@ -19,9 +19,9 @@ const AdminNavbar = () => {
                 <Navbar.Link href="/admin/category" className="text-white font-bold hover:text-fuchsia-200">
                     Category
                 </Navbar.Link>
-                <Navbar.Link href="/admin/question" className="text-white font-bold hover:text-fuchsia-200">
-                    Question
-                </Navbar.Link>
+                {/*<Navbar.Link href="/admin/question" className="text-white font-bold hover:text-fuchsia-200">*/}
+                {/*    Question*/}
+                {/*</Navbar.Link>*/}
 
                 <div className="flex md:order-1">
 
@@ -45,8 +45,10 @@ const AdminNavbar = () => {
                     </Dropdown>
                     <Navbar.Toggle/>
                 </div>
+
             </Navbar.Collapse>
         </Navbar>
+
     );
 };
 
