@@ -128,11 +128,10 @@ const SignUpForm = () => {
                     </div>
 
                     <Button type="submit" color="purple" className="w-full" disabled={isLoading}>
-                        Sign Up
                         {isLoading ? (
-                            <Spinner className="mr-2" size="sm" light={true} />  // Show spinner while loading
+                            <Spinner className="mr-2" size="sm" light={true} />
                         ) : (
-                            'Sign In'
+                            'Sign Up'
                         )}
                     </Button>
                 </form>

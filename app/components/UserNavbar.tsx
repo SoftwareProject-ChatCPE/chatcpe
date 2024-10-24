@@ -23,7 +23,7 @@ const UserNavbar = () => {
                 </div>
             </Navbar.Brand>
             <Navbar.Collapse className="justify-between">
-                <Navbar.Link href="/" className='text-indigo-200'>
+                <Navbar.Link href="/">
                     Home
                 </Navbar.Link>
                 <Navbar.Link href="/user">
