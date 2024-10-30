@@ -16,7 +16,6 @@ export default function UserLayout({
 }) {
     return (
         <section>
-            {/* Include shared UI here e.g. a header or sidebar */}
             <UserNavbar />
      <Suspense fallback={<Loading />}>
             {children}

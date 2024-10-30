@@ -4,12 +4,14 @@ const prisma = new PrismaClient();
 
 
 /**
- * Handles a PUT request to increment the visit count of a question.
+ * Handles the PUT request to update the visit count of a specific question.
  *
- * @param request - The incoming HTTP request object.
- * @param params - An object containing route parameters.
- * @param params.visit_id - The ID of the question whose visit count is to be incremented.
- * @returns A JSON response with the updated question data if successful, or an error message if not.
+ * @param {Request} request - The incoming HTTP request object.
+ * @param {Object} param1 - An object containing route parameters.
+ * @param {Object} param1.params - The route parameters.
+ * @param {string} param1.params.visit_id - The ID of the question to update.
+ *
+ * @return {Promise<Response>} A promise that resolves to the HTTP response object.
  */
 export async function PUT(request: Request, { params }: { params: { visit_id: string } }) {
     try {
