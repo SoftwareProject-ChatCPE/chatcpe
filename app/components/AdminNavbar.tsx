@@ -3,7 +3,27 @@ import {Navbar, Dropdown, Flowbite} from 'flowbite-react';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 
+/**
+ * AdminNavbar is a React functional component that renders a navigation bar specifically designed
+ * for the admin panel of the ChatCPE application. It utilizes custom theming via the Flowbite library
+ * to style the navigation links and dropdown menu.
+ *
+ * The navigation bar is fixed to the top of the viewport and adapts its style based on the customTheme settings.
+ * The customTheme defines different styles for active and inactive states of the navigation links.
+ *
+ * Feature include:
+ * - Branding with the application name and a short description.
+ * - Navigation links to admin sections such as 'Statistic' and 'Category'.
+ * - A dropdown menu providing additional actions such as navigating to the Home page,
+ *   adding a new admin, and logging out.
+ * - Adaptiveness, making use of classes for different screen sizes and handling dark mode settings.
+ *
+ * Note: This component relies on external libraries like Flowbite, Navbar, Dropdown, and Link.
+ *
+ * @constant
+ */
 const AdminNavbar = () => {
+
     const customTheme = {
         navbar: {
             link: {

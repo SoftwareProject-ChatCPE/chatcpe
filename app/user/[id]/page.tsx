@@ -17,9 +17,31 @@ type QuestionData = {
     category_id: number;
     created_at: string;
     updated_at: string;
-    answer?: AnswerData; // Make answer optional
+    answer: AnswerData;
 };
 
+/**
+ * The `QuestionPage` component fetches and displays a list of questions based on the given category ID.
+ *
+ * This component uses the `useParams` hook from React Router to retrieve the category ID from the URL
+ * and fetches the corresponding questions from the server. It handles the loading state while fetching,
+ * and displays appropriate messages when there are no questions available or when questions are being loaded.
+ *
+ * Once the questions are fetched, it displays them in buttons. Clicking on a button displays the answer
+ * to the question and increments the visit count for that question on the server.
+ *
+ * External Dependencies:
+ * - `useParams` from `react-router-dom`
+ * - `useState` and `useEffect` hooks from `react`
+ * - `Spinner` component for loading indicator
+ * - `Swal` for displaying alert messages
+ * - `Link` component for navigation
+ * - `Button` component for styling
+ *
+ * State Variables:
+ * - `questions`: Array of question objects fetched from the server.
+ * - `loading`: Boolean indicating whether the data is still being loaded.
+ */
 const QuestionPage = () => {
     const params = useParams();
     const { id } = params;

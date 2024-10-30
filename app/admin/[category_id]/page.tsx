@@ -6,6 +6,7 @@ import {useParams} from 'next/navigation';
 import Link from "next/link";
 
 
+
 type Answer = {
     answer_id: number;
     answer_text: string;
@@ -21,10 +22,18 @@ type Question = {
     answer: Answer;
 };
 
+
+/**
+ * QuestionManagement component is responsible for managing operations related to questions
+ * and answers within a specified category. It enables users to add, edit, and delete questions
+ * and answers, as well as open modals for these operations.
+ *
+ * @return {JSX.Element} - The rendered QuestionManagement component.
+ */
 const QuestionManagement = () => {
     const params = useParams(); // Use useParams to get the dynamic category ID
     const { category_id } = params; // Get the category ID from params
-    const [questions, setQuestions] = useState<Question[]>([]);
+    const [questions, setQuestions] = useState<Question[]>([]); //
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newQuestion, setNewQuestion] = useState<string>('');
@@ -34,8 +43,21 @@ const QuestionManagement = () => {
     const [editAnswerText, setEditAnswerText] = useState<string>('');
 
 
-
-    // Fetch all questions for the specific category
+    /**
+     * Asynchronously fetches questions from the server based on the provided category ID.
+     *
+     * This function triggers a loading state before sending an HTTP GET request to
+     * retrieve questions. It uses the fetch API to get questions from the endpoint
+     * `/api/question/${category_id}`. Upon receiving the response, it parses the data
+     * to JSON format and updates the state with the questions if the data is an array.
+     * If the data is not an array, it sets an empty array. The loading state is turned off
+     * once the request is completed, whether it succeeded or failed.
+     *
+     * Errors encountered during the fetch request are logged to the console.
+     *
+     * @function
+     * @async
+     */
     const fetchQuestions = async () => {
         setLoading(true);
         try {
@@ -55,7 +77,21 @@ const QuestionManagement = () => {
         }
     }, [category_id]);
 
-    // Open the modal for adding a new question
+
+    /**
+     * handleOpenAddModal
+     *
+     * This function is used to open a modal for adding a new question and answer.
+     * It performs the following actions:
+     *
+     * 1. Clears the form fields by setting:
+     *    - editQuestionId to null
+     *    - newQuestion to an empty string
+     *    - newAnswer to an empty string
+     *    - editQuestionText to an empty string
+     *    - editAnswerText to an empty string
+     * 2. Sets the modal's open state to true.
+     */
     const handleOpenAddModal = () => {
         // Clear the form fields
         setEditQuestionId(null);
@@ -66,7 +102,19 @@ const QuestionManagement = () => {
         setIsModalOpen(true); // Open the modal
     };
 
-    // Open the modal for editing a question
+
+    /**
+     * Handles the opening of the edit modal for a selected question.
+     *
+     * Populates the form fields with the selected question's data, including the question ID,
+     * question text, and optionally the answer text. Opens the modal after populating the fields.
+     *
+     * @param {Question} question - The question object containing data to populate the form fields.
+     * @property {string} question.question_id - The unique identifier of the question.
+     * @property {string} question.question_text - The text of the question.
+     * @property {Answer} [question.answer] - The answer object associated with the question, if any.
+     * @property {string} [question.answer.answer_text] - The text of the answer.
+     */
     const handleOpenEditModal = (question: Question) => {
         // Populate the form fields with the selected question's data
         setEditQuestionId(question.question_id);
@@ -75,7 +123,25 @@ const QuestionManagement = () => {
         setIsModalOpen(true); // Open the modal
     };
 
-    // Add new question and answer
+
+    /**
+     * Asynchronously handles the addition of a new question.
+     *
+     * This function checks if both the question text and answer text are provided.
+     * If either of them is missing, it displays an error message using Swal.
+     * If both are present, it sends a POST request to the server to add the new question.
+     *
+     * On success, a success message is displayed and several state updates are performed:
+     * - Fetching the updated list of questions
+     * - Resetting the input fields
+     * - Closing the modal
+     *
+     * On failure, it displays an error message.
+     *
+     * @async
+     * @function handleAddQuestion
+     * @returns {Promise<void>}
+     */
     const handleAddQuestion = async () => {
         if (!newQuestion || !newAnswer) {
             Swal.fire('Error', 'Both question text and answer text are required', 'error');
@@ -116,7 +182,21 @@ const QuestionManagement = () => {
         }
     };
 
-    // Edit question text
+
+    /**
+     * Asynchronously handles the editing of a question.
+     *
+     * This function validates the necessary input fields (question text and answer text)
+     * before sending a PUT request to update the specified question. In case of a successful
+     * update, it triggers a modal closure and refetches the list of questions. On failure,
+     * it displays an appropriate error message to the user.
+     *
+     * Error messages are displayed using the Swal.fire library.
+     *
+     * @async
+     * @function handleEditQuestion
+     * @throws Will throw an error if the fetch operation fails.
+     */
     const handleEditQuestion = async () => {
         if (!editQuestionText || !editAnswerText) {
             Swal.fire('Error', 'Both question text and answer text are required', 'error');
@@ -149,7 +229,13 @@ const QuestionManagement = () => {
         }
     };
 
-    // Delete question and its related answer
+
+    /**
+     * Handles the deletion of a question by its unique identifier.
+     *
+     * @param {number} questionId - The unique identifier of the question to be deleted.
+     * @returns {Promise<void>} - A promise that resolves when the question has been deleted or an error has been handled.
+     */
     const handleDeleteQuestion = async (questionId: number) => {
         try {
             const response = await fetch(`/api/question/${questionId}`, {
@@ -169,7 +255,7 @@ const QuestionManagement = () => {
     };
 
 
-
+    // Render the component
     return (
         <div className="min-h-screen bg-gray-100 p-8 relative mt-16">
             <div className="flex justify-between items-center mb-4">
@@ -180,12 +266,14 @@ const QuestionManagement = () => {
             </div>
 
             <Table hoverable className="bg-white shadow-md rounded-lg">
+
                 <Table.Head>
                     <Table.HeadCell>ID</Table.HeadCell>
                     <Table.HeadCell>Question</Table.HeadCell>
                     <Table.HeadCell>Answer</Table.HeadCell>
                     <Table.HeadCell>Actions</Table.HeadCell>
                 </Table.Head>
+
                 <Table.Body>
                     {loading ? (
                         <tr>

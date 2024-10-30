@@ -1,7 +1,19 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-// Get single categories
+
+/**
+ * Handles GET requests to retrieve a single category by its ID.
+ *
+ * @param request - The incoming request object.
+ * @param params - An object containing route parameters.
+ * @param params.category_id - The ID of the category to retrieve.
+ * @returns A JSON response containing the category data if found, or an error message if not.
+ *          - Status 200: Returns the category data.
+ *          - Status 400: Returns an error if the category ID is invalid.
+ *          - Status 404: Returns an error if the category is not found.
+ *          - Status 500: Returns an error if there is an internal server error.
+ */
 export async function GET(request: Request, { params }: { params: { category_id: string } }) {
     try {
         const categoryId = parseInt(params.category_id, 10);
@@ -25,7 +37,18 @@ export async function GET(request: Request, { params }: { params: { category_id:
     }
 }
 
-// Update a category by category_id
+
+/**
+ * Updates a category's name by its ID.
+ *
+ * @param request - The incoming request object containing the new category data.
+ * @param params - An object containing route parameters.
+ * @param params.category_id - The ID of the category to update.
+ * @returns A JSON response containing the updated category data if successful.
+ *          - Status 200: Returns the updated category data.
+ *          - Status 400: Returns an error if the category ID is invalid, the request body is invalid, or the category name is empty.
+ *          - Status 500: Returns an error if there is an internal server error.
+ */
 export async function PUT(request: Request, { params }: { params: { category_id: string } }) {
     try {
         const categoryId = parseInt(params.category_id, 10);
@@ -59,7 +82,18 @@ export async function PUT(request: Request, { params }: { params: { category_id:
     }
 }
 
-// Delete a category by category_id
+
+/**
+ * Deletes a category by its ID if it has no associated questions.
+ *
+ * @param request - The incoming request object.
+ * @param params - An object containing route parameters.
+ * @param params.category_id - The ID of the category to delete.
+ * @returns A JSON response indicating the result of the delete operation.
+ *          - Status 200: Returns a success message if the category is deleted.
+ *          - Status 400: Returns an error if the category ID is invalid or if the category has associated questions.
+ *          - Status 500: Returns an error if there is an internal server error.
+ */
 export async function DELETE(request: Request, { params }: { params: { category_id: string } }) {
     try {
         const categoryId = parseInt(params.category_id, 10);
@@ -67,14 +101,16 @@ export async function DELETE(request: Request, { params }: { params: { category_
         if (isNaN(categoryId)) {
             return NextResponse.json({ error: "Invalid category ID provided" }, { status: 400 });
         }
-        //check if category has questions and return error if it does
-        const questions = await prisma.question.findMany({
+
+        const hasQuestions = await prisma.question.count({
             where: { category_id: categoryId },
         });
-        if (questions.length > 0) {
+
+        if (hasQuestions > 0) {
             return NextResponse.json({ error: "Category has questions, delete questions before deleting Category" }, { status: 400 });
         }
-        const deletedCategory = await prisma.category.delete({
+
+        await prisma.category.delete({
             where: { category_id: categoryId },
         });
 

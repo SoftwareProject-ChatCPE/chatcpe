@@ -4,6 +4,7 @@ import { Table, Button, Modal, Spinner, Textarea } from 'flowbite-react';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
 
+
 type Category = {
     category_id: number;
     category_name: string;
@@ -14,6 +15,28 @@ type Category = {
     };
 };
 
+/**
+ * Component for managing categories including adding, editing, and deleting categories.
+ *
+ * The component handles the following functionalities:
+ * - Fetch categories from the API and display them in a table.
+ * - Open modals for adding a new category or editing an existing category.
+ * - Perform CRUD operations (Create, Read, Update, Delete) on categories via API.
+ *
+ * State Variables:
+ * - `categories`: An array to store the list of fetched categories.
+ * - `loading`: A boolean to indicate if the categories are being loaded.
+ * - `isModalOpen`: A boolean to control the visibility of the add/edit modal.
+ * - `newCategory`: A string to store the name of a new category being added.
+ * - `editCategoryId`: A nullable number to store the ID of the category being edited.
+ * - `editCategoryName`: A string to store the name of the category being edited.
+ *
+ * API Endpoints:
+ * - Fetch categories: GET `/api/category`
+ * - Add a category: POST `/api/category`
+ * - Edit a category: PUT `/api/category/{id}`
+ * - Delete a category: DELETE `/api/category/{id}`
+ */
 const CategoryManagement = () => {
     const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(false);
@@ -22,7 +45,19 @@ const CategoryManagement = () => {
     const [editCategoryId, setEditCategoryId] = useState<number | null>(null);
     const [editCategoryName, setEditCategoryName] = useState<string>('');
 
-    // Fetch categories from the API
+
+    /**
+     * Asynchronously fetches categories from the API and updates the state.
+     *
+     * This function performs the following steps:
+     * 1. Sets the loading state to true.
+     * 2. Attempts to fetch category data from the specified API endpoint.
+     * 3. Parses the response data as JSON and updates the categories state with the fetched data.
+     * 4. Logs an error message to the console if the fetch operation fails.
+     * 5. Resets the loading state to false once the fetch operation completes, regardless of success or failure.
+     *
+     * @throws Will log an error message to the console if the fetch operation fails.
+     */
     const fetchCategories = async () => {
         setLoading(true);
         try {
@@ -40,7 +75,11 @@ const CategoryManagement = () => {
         fetchCategories();
     }, []);
 
-    // Open Add Modal: Clear inputs before opening
+
+    /**
+     * Handles the closing of the add/edit modal.
+     * Clears the input fields and closes the modal.
+     */
     const handleOpenAddModal = () => {
         setNewCategory(''); // Clear the category name for new entry
         setEditCategoryId(null); // Clear the editing ID
@@ -48,14 +87,32 @@ const CategoryManagement = () => {
         setIsModalOpen(true); // Open the modal
     };
 
-    // Open Edit Modal: Populate the fields with the category info
+
+    /**
+     * Handles the opening of the edit modal for a category.
+     *
+     * @param {Category} category - The category object containing details to be edited.
+     * @param {string} category.category_id - The ID of the category to be edited.
+     * @param {string} category.category_name - The name of the category to be edited.
+     */
     const handleOpenEditModal = (category: Category) => {
         setEditCategoryId(category.category_id); // Set the ID to be edited
         setEditCategoryName(category.category_name); // Populate the field with the category name
         setIsModalOpen(true); // Open the modal
     };
 
-    // Add new category
+
+    /**
+     * Asynchronously handles the addition of a new category.
+     * Sends a POST request to the server to add the category.
+     *
+     * If the request is successful, displays a success message,
+     * fetches the updated list of categories, clears the input field,
+     * and closes the modal.
+     *
+     * If the request fails, displays an error message based on the server's response.
+     * Handles any errors that occur during the fetch operation and displays an appropriate error message.
+     */
     const handleAddCategory = async () => {
         try {
             const response = await fetch('/api/category', {
@@ -88,7 +145,22 @@ const CategoryManagement = () => {
         }
     };
 
-    // Edit category
+
+    /**
+     * Asynchronously handles the editing of a category.
+     *
+     * This function performs the following steps:
+     * 1. Checks if `editCategoryId` is not null. If null, the function returns early.
+     * 2. Sends a PUT request to update the category with the ID `editCategoryId`.
+     * 3. If the response is successful, it shows a success message, fetches the updated list of categories,
+     *    and resets relevant state variables.
+     * 4. If the response is not successful, it shows an error message with details from the response.
+     * 5. Catches any errors that occur during the fetch and shows a generic error message.
+     *
+     * @async
+     * @function handleEditCategory
+     * @returns {Promise<void>} A Promise that resolves when the category editing process is complete.
+     */
     const handleEditCategory = async () => {
         if (editCategoryId === null) return;
         try {
@@ -123,7 +195,14 @@ const CategoryManagement = () => {
         }
     };
 
-    // Delete category
+
+    /**
+     * Deletes a category with the given ID by sending a DELETE request to the server.
+     *
+     * @param {number} categoryId - The ID of the category to be deleted.
+     * @returns {Promise<void>} - A promise that resolves when the category deletion is complete.
+     * @throws Will display an error alert if the deletion fails or if an error occurs during the request.
+     */
     const handleDeleteCategory = async (categoryId: number) => {
         try {
             const response = await fetch(`/api/category/${categoryId}`, {

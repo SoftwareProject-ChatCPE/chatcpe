@@ -10,7 +10,16 @@ const userUpdateSchema = z.object({
   password: z.string().min(8).optional(),
 });
 
-// Fetch a single user by user_id
+
+/**
+ * Handles GET requests to retrieve a user by their user ID.
+ *
+ * @param request - The incoming request object.
+ * @param params - An object containing route parameters.
+ * @param params.user_id - The ID of the user to retrieve.
+ * @returns A JSON response containing the user data without the password if found,
+ *          or an error message if the user is not found or if an error occurs.
+ */
 export async function GET(request: Request, { params }: { params: { user_id: string } }) {
   try {
     const userId = parseInt(params.user_id, 10);
@@ -37,7 +46,16 @@ export async function GET(request: Request, { params }: { params: { user_id: str
   }
 }
 
-// Update a user by user_id
+
+/**
+ * Handles PUT requests to update a user's information by their user ID.
+ *
+ * @param request - The incoming request object containing the user's updated data.
+ * @param params - An object containing route parameters.
+ * @param params.user_id - The ID of the user to update.
+ * @returns A JSON response containing the updated user data without the password if successful,
+ *          or an error message if the user ID is invalid, the user is not found, or if an error occurs.
+ */
 export async function PUT(request: Request, { params }: { params: { user_id: string } }) {
   try {
     const userId = parseInt(params.user_id, 10);
@@ -69,7 +87,16 @@ export async function PUT(request: Request, { params }: { params: { user_id: str
   }
 }
 
-// Delete a user by user_id
+
+/**
+ * Handles DELETE requests to remove a user by their user ID.
+ *
+ * @param request - The incoming request object.
+ * @param params - An object containing route parameters.
+ * @param params.user_id - The ID of the user to delete.
+ * @returns A JSON response containing the deleted user data without the password if successful,
+ *          or an error message if the user ID is invalid, the user is not found, or if an error occurs.
+ */
 export async function DELETE(request: Request, { params }: { params: { user_id: string } }) {
   try {
     const userId = parseInt(params.user_id, 10);

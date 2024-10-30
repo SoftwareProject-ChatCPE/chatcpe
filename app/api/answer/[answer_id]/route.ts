@@ -2,7 +2,16 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 
-//get an answer by answer_id
+
+/**
+ * Retrieves an answer from the database by its ID.
+ *
+ * @param request - The HTTP request object.
+ * @param params - An object containing route parameters.
+ * @param params.answer_id - The ID of the answer to be retrieved.
+ * @returns A JSON response containing the answer object with a status of 200 if found,
+ *          or an error message with an appropriate status code if an error occurs.
+ */
 export async function GET(request: Request, { params }: { params: { answer_id: string } }) {
     try {
         const answerId = parseInt(params.answer_id, 10);
@@ -25,7 +34,15 @@ export async function GET(request: Request, { params }: { params: { answer_id: s
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
-//update an answer by answer_id
+/**
+ * Updates an existing answer in the database by its ID.
+ *
+ * @param request - The HTTP request object containing the updated answer data in JSON format.
+ * @param params - An object containing route parameters.
+ * @param params.answer_id - The ID of the answer to be updated.
+ * @returns A JSON response containing the updated answer object with a status of 200 if successful,
+ *          or an error message with an appropriate status code if an error occurs.
+ */
 export async function PUT(request: Request, { params }: { params: { answer_id: string } }) {
     try {
         const answerId = parseInt(params.answer_id, 10);

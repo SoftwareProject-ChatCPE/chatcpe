@@ -12,6 +12,13 @@ export const metadata: Metadata = {
       "answering questions about CPE department.",
 };
 
+/**
+ * RootLayout - A component that renders the root layout of the application.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The child elements to be rendered inside the root layout.
+ * @return {JSX.Element} The root layout JSX element.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{

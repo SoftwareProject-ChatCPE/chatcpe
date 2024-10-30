@@ -5,9 +5,23 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import {Button, Spinner} from 'flowbite-react'; // Import Flowbite's Button
+import {Button, Spinner} from 'flowbite-react'; 
 import Swal from 'sweetalert2';
 
+/**
+ * Defines the schema for the sign-up form using Zod.
+ * 
+ * The schema includes validation rules for the following fields:
+ * - `name`: A required string with a maximum length of 30 characters.
+ * - `surname`: A required string with a maximum length of 30 characters.
+ * - `email`: A required string that must be a valid email format.
+ * - `password`: A required string with a minimum length of 8 characters.
+ * - `confirmPassword`: A required string that must match the `password` field.
+ * 
+ * The schema also includes a refinement to ensure that the `password` and `confirmPassword` fields match.
+ * 
+ * @returns A Zod schema object for form validation.
+ */
 const FormSchema = z
     .object({
         name: z.string().min(1, 'Name is required').max(30),
@@ -24,7 +38,17 @@ const FormSchema = z
         message: 'Passwords do not match',
     });
 
-const SignUpForm = () => {
+
+/**
+ * Renders a Sign-Up Form component.
+ *
+ * The SignUpForm component provides interfacing for users to sign up by entering their name, surname,
+ * email, password, and confirm password. It utilizes React Hook Form for form validation and state management,
+ * and Zod for schema-based validation. Upon form submission, it attempts to register a new user via an API call.
+ *
+ * @returns {JSX.Element} The rendered component JSX element.
+ */
+const SignUpForm = (): JSX.Element => {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 

@@ -4,7 +4,14 @@ import Link from "next/link";
 import { Session } from "next-auth";
 import {Spinner, Button, Card, Flowbite} from 'flowbite-react';
 
-export default function Home() {
+/**
+ * The `Home` component represents the main page of the application.
+ * It initializes and manages the state for the current session and top questions.
+ * This component also provides a carousel to display the top questions, and buttons for navigating between them.
+ *
+ * @return The rendered JSX of the Home component.
+ */
+export default function Page() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);

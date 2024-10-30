@@ -3,7 +3,15 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-//Get all categories
+
+/**
+ * Handles GET requests to retrieve all categories from the database.
+ * Each category includes a count of associated questions.
+ *
+ * @returns {Promise<NextResponse>} A promise that resolves to a NextResponse object.
+ * The response contains a JSON array of categories with their question counts and a status code of 200.
+ * If an error occurs, it returns a JSON object with an error message and a status code of 500.
+ */
 export async function GET() {
   try {
     const categories = await prisma.category.findMany({
@@ -14,8 +22,6 @@ export async function GET() {
       },
     });
 
-
-
     return NextResponse.json(categories, { status: 200 });
   } catch (error) {
     console.error(error);
@@ -24,7 +30,17 @@ export async function GET() {
 }
 
 
-//Create a new category
+/**
+ * Handles POST requests to create a new category in the database.
+ *
+ * @param req - The incoming request object containing the category data in JSON format.
+ * 
+ * @returns {Promise<NextResponse>} A promise that resolves to a NextResponse object.
+ * - If the category already exists, it returns a JSON object with a message and a status code of 409.
+ * - If the category name is not provided, it returns a JSON object with a message and a status code of 400.
+ * - If the category is successfully created, it returns a JSON object with the new category and a message, with a status code of 201.
+ * - If an error occurs during the process, it returns a JSON object with an error message and a status code of 500.
+ */
 export async function POST(req: Request) {
   try {
     const body = await req.json();

@@ -10,7 +10,24 @@ type Category = {
   updated_at: string;
 };
 
-const Selectpage = () => {
+/**
+ * SelectPage component fetches categories from the API and renders them as links.
+ *
+ * This component manages its own state using hooks:
+ * - `categories`: an array of category objects retrieved from the API.
+ * - `loading`: a boolean indicating whether the fetch request is in progress.
+ *
+ * The component uses a `useEffect` hook to fetch category data when the component is mounted.
+ * It makes an asynchronous request to '/api/category/' and updates the state with the received data.
+ * In case of an error, it logs the error to the console.
+ *
+ * While the data is being fetched, a loading spinner is displayed.
+ * Once the data is fetched, the categories are display as clickable links.
+ *
+ * Each category link navigates to `/user/{category_id}`.
+ * An additional link to the floor map is also provided.
+ */
+const SelectPage = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -66,4 +83,4 @@ const Selectpage = () => {
   );
 }
 
-export default Selectpage;
+export default SelectPage;

@@ -3,11 +3,19 @@
 import React, { useState } from 'react';
 import Link from "next/link";
 import Image from 'next/image';
-
-import UserNavbar from "../../components/UserNavbar";
-import {Button} from "flowbite-react";  // Keep the old UserNavbar
+import {Button} from "flowbite-react";
 
 
+/**
+ * Classroom component for handling floor navigation and room searches.
+ *
+ * This component uses state to manage the currently active floor and the floor search input.
+ * It provides informational content for each floor, including text and image sources.
+ * The component handles user clicks on floors to activate them and processes search input
+ * to navigate to the appropriate floor based on the provided room number or identifier.
+ *
+ * @param {2 | "M" | 3 | 4 | 5 | 6 | 7 | 8 | null} activeFloor - The currently active floor.
+ * @param {string} searchFloor - The current*/
 const Classroom = () => {
     const [activeFloor, setActiveFloor] = useState<2 | "M" | 3 | 4 | 5 | 6 | 7 | 8 | null>(null);  // Default active floor is null since no floor is selected by default
     const [searchFloor, setSearchFloor] = useState(''); // Add state for search input
@@ -142,9 +150,6 @@ const Classroom = () => {
 
     return (
         <>
-            {/* Old Horizontal UserNavbar */}
-            <UserNavbar />
-
             {/* Search Bar */}
             <form onSubmit={handleSearch} className="fixed top-[120px] right-5 w-full max-w-[300px] flex items-center">
                 <input

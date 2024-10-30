@@ -1,6 +1,19 @@
 'use client';
 import {Flowbite, Navbar} from 'flowbite-react';
 
+/**
+ * UserNavbar is a functional component that renders a custom-styled navigation bar.
+ *
+ * The navbar includes the brand name "ChatCPE" along with a subtitle "a basic screening bot".
+ * There are four navigation links: Home, Question, Floor Map, and University Map.
+ *
+ * The navbar is styled using a custom theme specified in the `customTheme` object.
+ * The theme customizes the appearance of the links, with different styles for active and inactive states.
+ *
+ * The component uses the Flowbite library for theming and the Navbar component for layout.
+ *
+ * @returns {JSX.Element} - JSX element representing the custom-styled user navigation bar.
+ */
 const UserNavbar = () => {
     const customTheme = {
         navbar: {

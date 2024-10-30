@@ -9,7 +9,16 @@ const questionSchema = z.object({
     category_id: z.number(),
     answer_text: z.string().optional(),
 });
-//get all questions
+
+
+/**
+ * Handles GET requests to retrieve a list of questions from the database.
+ * Each question includes its associated category and answer details.
+ *
+ * @param request - The incoming request object.
+ * @returns A JSON response containing the list of questions with their categories and answers,
+ *          or an error message if the operation fails.
+ */
 export async function GET(request: Request) {
     try {
         const questions = await prisma.question.findMany({
@@ -35,7 +44,16 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
-// create a new question
+
+/**
+ * Handles POST requests to create a new question in the database.
+ * Validates the request body against a predefined schema and checks for the existence of the specified category.
+ * If valid, creates a new question with an associated answer.
+ *
+ * @param request - The incoming request object containing the question details in JSON format.
+ * @returns A JSON response containing the newly created question and a success message,
+ *          or an error message if the operation fails or the input is invalid.
+ */
 export async function POST(request: Request) {
     try {
         const body = await request.json();

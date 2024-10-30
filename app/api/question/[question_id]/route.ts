@@ -3,12 +3,10 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 
-type Answer = {
-    answer_text: string;
-};
 
 
-// Get all questions from category_id
+
+
 export async function GET(request: Request) {
     try {
         const url = new URL(request.url);
@@ -40,29 +38,64 @@ export async function GET(request: Request) {
 }
 
 
-//delete a category by question_id also delete the answers
+
+/**
+ * Deletes a question and its associated answers from the database.
+ *
+ * @param request - The HTTP request object.
+ * @param params - An object containing route parameters.
+ * @param params.question_id - The ID of the question to be deleted.
+ * @returns A JSON response indicating the result of the delete operation.
+ *          - If successful, returns a message confirming deletion with a 200 status.
+ *          - If the question ID is invalid, returns an error message with a 400 status.
+ *          - If the question is not found, returns an error message with a 404 status.
+ *          - If an internal error occurs, returns an error message with a 500 status.
+ */
 export async function DELETE(request: Request, { params }: { params: { question_id: string } }) {
     try {
         const questionId = parseInt(params.question_id, 10);
 
         if (isNaN(questionId)) {
-            return NextResponse.json({ error: "Invalid category ID provided" }, { status: 400 });
+            return NextResponse.json({ error: "Invalid question ID provided" }, { status: 400 });
         }
 
-        // Delete the category and associated answer
-        const deletedQuestion = await prisma.question.delete({
+        // Check if the question exists before attempting to delete
+        const existingQuestion = await prisma.question.findUnique({
             where: { question_id: questionId },
-            include: { answer: true },
         });
 
-        return NextResponse.json({ message: "Question and associated answer deleted successfully" }, { status: 200 });
+        if (!existingQuestion) {
+            return NextResponse.json({ error: "Question not found" }, { status: 404 });
+        }
+
+        // Delete the question and associated answers
+        await prisma.answer.deleteMany({
+            where: { question_id: questionId },
+        });
+
+        await prisma.question.delete({
+            where: { question_id: questionId },
+        });
+
+        return NextResponse.json({ message: "Question and associated answers deleted successfully" }, { status: 200 });
     } catch (error) {
-        console.error("Error deleting category:", error);
+        console.error("Error deleting question:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
 
-//update a question by question_id also update the answers
+
+/**
+ * Updates a question and its associated answer in the database.
+ *
+ * @param request - The HTTP request object containing the updated question and answer data.
+ * @param params - An object containing route parameters.
+ * @param params.question_id - The ID of the question to be updated.
+ * @returns A JSON response with the updated question and answer.
+ *          - If successful, returns the updated question and answer with a 200 status.
+ *          - If the question ID is invalid or data is missing, returns an error message with a 400 status.
+ *          - If an internal error occurs, returns an error message with a 500 status.
+ */
 export async function PUT(request: Request, { params }: { params: { question_id: string } }) {
     try {
         const questionId = parseInt(params.question_id, 10);

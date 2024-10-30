@@ -2,7 +2,15 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-//increment the visit count of a question
+
+/**
+ * Handles a PUT request to increment the visit count of a question.
+ *
+ * @param request - The incoming HTTP request object.
+ * @param params - An object containing route parameters.
+ * @param params.visit_id - The ID of the question whose visit count is to be incremented.
+ * @returns A JSON response with the updated question data if successful, or an error message if not.
+ */
 export async function PUT(request: Request, { params }: { params: { visit_id: string } }) {
     try {
         const questionId = parseInt(params.visit_id, 10);
